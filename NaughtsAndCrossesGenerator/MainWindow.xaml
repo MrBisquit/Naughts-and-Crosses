@@ -1,0 +1,162 @@
+﻿<Window x:Class="NaughtsAndCrossesGenerator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NaughtsAndCrossesGenerator"
+        mc:Ignorable="d"
+        Title="Naughts and Crosses Generator"
+        Height="450" Width="800"
+        ResizeMode="CanMinimize"
+        Loaded="Window_Loaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid>
+            <!--<Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>-->
+
+            <!--<Grid Margin="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock FontWeight="Bold" Margin="0, 0, 5, 0">Naughts and Crosses Generator</TextBlock>
+                <TextBlock Grid.Column="1" Margin="0, 0, 5, 0" Width="75">Last move: <Run FontWeight="SemiBold" Name="LastMove">...</Run></TextBlock>
+                <TextBlock Grid.Column="2" Margin="0, 0, 5, 0">Turn: <Run FontWeight="SemiBold" Name="Turn">...</Run></TextBlock>
+            </Grid>-->
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Margin="3">A</TextBlock>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Margin="3">B</TextBlock>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" Margin="3">C</TextBlock>
+
+                <TextBlock Width="20" Height="20" Margin="3"></TextBlock>
+
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1">1</TextBlock>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" Margin="3">2</TextBlock>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="3" Margin="3">3</TextBlock>
+
+                <Button Name="A1" Grid.Column="1" Grid.Row="1" Click="A1_Click" FontSize="25">_</Button>
+                <Button Name="A2" Grid.Column="2" Grid.Row="1" Click="A2_Click" FontSize="25">_</Button>
+                <Button Name="A3" Grid.Column="3" Grid.Row="1" Click="A3_Click" FontSize="25">_</Button>
+
+                <Button Name="B1" Grid.Column="1" Grid.Row="2" Click="B1_Click" FontSize="25">_</Button>
+                <Button Name="B2" Grid.Column="2" Grid.Row="2" Click="B2_Click" FontSize="25">_</Button>
+                <Button Name="B3" Grid.Column="3" Grid.Row="2" Click="B3_Click" FontSize="25">_</Button>
+
+                <Button Name="C1" Grid.Column="1" Grid.Row="3" Click="C1_Click" FontSize="25">_</Button>
+                <Button Name="C2" Grid.Column="2" Grid.Row="3" Click="C2_Click" FontSize="25">_</Button>
+                <Button Name="C3" Grid.Column="3" Grid.Row="3" Click="C3_Click" FontSize="25">_</Button>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Column="1" Margin="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <StackPanel>
+                <TextBlock>For Discord (Copy and paste)</TextBlock>
+                <TextBox Name="DiscordCopyAndPaste" IsReadOnly="True"></TextBox>
+            </StackPanel>
+
+            <Grid Grid.Row="1" VerticalAlignment="Bottom">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <TextBlock FontWeight="Bold" FontSize="15">Naughts and Crosses Generator<LineBreak /><Run FontWeight="SemiBold" FontSize="10">By William (github.com/MrBisquit)</Run></TextBlock>
+
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0" Margin="0, 0, 5, 0">Last move: <Run FontWeight="SemiBold" Name="LastMove">...</Run></TextBlock>
+                        <TextBlock Grid.Column="1" Margin="0, 0, 5, 0">Turn: <Run FontWeight="SemiBold" Name="Turn">...</Run></TextBlock>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel>
+                            <TextBlock>Checks:</TextBlock>
+                            <TextBlock>Column A:</TextBlock>
+                            <TextBlock>Column B:</TextBlock>
+                            <TextBlock>Column C:</TextBlock>
+                            <TextBlock>Rpw A:</TextBlock>
+                            <TextBlock>Row B:</TextBlock>
+                            <TextBlock>Row C:</TextBlock>
+                            <TextBlock>A1, B2, C3</TextBlock>
+                            <TextBlock>C1, B2, A3</TextBlock>
+                            <TextBlock>All filled (Tie)</TextBlock>
+                            <TextBlock>Winner</TextBlock>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                            <TextBlock></TextBlock>
+                            <TextBlock Name="CA" FontWeight="SemiBold">No</TextBlock>
+                            <TextBlock Name="CB" FontWeight="SemiBold">No</TextBlock>
+                            <TextBlock Name="CC" FontWeight="SemiBold">No</TextBlock>
+                            <TextBlock Name="RA" FontWeight="SemiBold">No</TextBlock>
+                            <TextBlock Name="RB" FontWeight="SemiBold">No</TextBlock>
+                            <TextBlock Name="RC" FontWeight="SemiBold">No</TextBlock>
+                            <!-- Diagonal -->
+                            <TextBlock Name="DA" FontWeight="SemiBold">No</TextBlock>
+                            <TextBlock Name="DB" FontWeight="SemiBold">No</TextBlock>
+                            <TextBlock Name="Tie" FontWeight="SemiBold">No</TextBlock>
+                            <TextBlock Name="Winner" FontWeight="SemiBold">...</TextBlock>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <StackPanel>
+                            <CheckBox>Play against the bot</CheckBox>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+
+                <DockPanel Grid.Row="2">
+                    <Button Width="125" HorizontalAlignment="Left" Name="StartBtn" Click="Start_Click">Start</Button>
+                    <Button Width="125" HorizontalAlignment="Right" Name="RestartBtn" Click="Restart_Click">Restart</Button>
+                </DockPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
