@@ -120,7 +120,7 @@
                             <TextBlock>Column A:</TextBlock>
                             <TextBlock>Column B:</TextBlock>
                             <TextBlock>Column C:</TextBlock>
-                            <TextBlock>Rpw A:</TextBlock>
+                            <TextBlock>Row A:</TextBlock>
                             <TextBlock>Row B:</TextBlock>
                             <TextBlock>Row C:</TextBlock>
                             <TextBlock>A1, B2, C3</TextBlock>

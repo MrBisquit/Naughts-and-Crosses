@@ -36,7 +36,8 @@ namespace NaughtsAndCrossesGenerator
         bool started = false;
 
         bool isUsingBot = false;
-        Bot.Bot bot;
+        public Bot.Bot bot;
+        Bot.BotInfo botInfo;
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -84,6 +85,14 @@ namespace NaughtsAndCrossesGenerator
             C3.IsEnabled = false;
 
             RestartBtn.IsEnabled = false;
+            started = false;
+        }
+
+        private void SetWinner(int winner)
+        {
+            Stop();
+            Winner.Text = (winner == 0 ? 'o' : 'x').ToString();
+            MessageBox.Show($"Winner: {(winner == 0 ? 'o' : winner == 1 ? 'x' : "No winner? 👍")}");
         }
 
         private void ClearButtons()
@@ -189,6 +198,8 @@ namespace NaughtsAndCrossesGenerator
                 A1.Background = new SolidColorBrush(Colors.Green);
                 B1.Background = new SolidColorBrush(Colors.Green);
                 C1.Background = new SolidColorBrush(Colors.Green);
+
+                SetWinner(colA);
             }
 
             if (colB != 2)
@@ -196,6 +207,8 @@ namespace NaughtsAndCrossesGenerator
                 A2.Background = new SolidColorBrush(Colors.Green);
                 B2.Background = new SolidColorBrush(Colors.Green);
                 C2.Background = new SolidColorBrush(Colors.Green);
+
+                SetWinner(colB);
             }
 
             if (colC != 2)
@@ -203,6 +216,8 @@ namespace NaughtsAndCrossesGenerator
                 A3.Background = new SolidColorBrush(Colors.Green);
                 B3.Background = new SolidColorBrush(Colors.Green);
                 C3.Background = new SolidColorBrush(Colors.Green);
+
+                SetWinner(colC);
             }
 
             if (rowAC != 2)
@@ -210,6 +225,8 @@ namespace NaughtsAndCrossesGenerator
                 A1.Background = new SolidColorBrush(Colors.Green);
                 B1.Background = new SolidColorBrush(Colors.Green);
                 C1.Background = new SolidColorBrush(Colors.Green);
+
+                SetWinner(rowAC);
             }
 
             if (rowCA != 2)
@@ -217,6 +234,8 @@ namespace NaughtsAndCrossesGenerator
                 A3.Background = new SolidColorBrush(Colors.Green);
                 B2.Background = new SolidColorBrush(Colors.Green);
                 C1.Background = new SolidColorBrush(Colors.Green);
+
+                SetWinner(rowCA);
             }
 
             if (rowA != 2)
@@ -224,20 +243,26 @@ namespace NaughtsAndCrossesGenerator
                 A1.Background = new SolidColorBrush(Colors.Green);
                 A2.Background = new SolidColorBrush(Colors.Green);
                 A3.Background = new SolidColorBrush(Colors.Green);
+
+                SetWinner(rowA);
             }
 
-            if(rowB != 2)
+            if (rowB != 2)
             {
                 B1.Background = new SolidColorBrush(Colors.Green);
                 B2.Background = new SolidColorBrush(Colors.Green);
                 B3.Background = new SolidColorBrush(Colors.Green);
+
+                SetWinner(rowB);
             }
 
-            if(rowC != 2)
+            if (rowC != 2)
             {
                 C1.Background = new SolidColorBrush(Colors.Green);
                 C2.Background = new SolidColorBrush(Colors.Green);
                 C3.Background = new SolidColorBrush(Colors.Green);
+
+                SetWinner(rowC);
             }
 
             Turn.Text = (turn == 0 ? 'o' : 'x').ToString();
@@ -329,8 +354,20 @@ namespace NaughtsAndCrossesGenerator
 
         private void PlayAgainstBot_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("The bot is constantly trained while you are playing, so hopefully it " +
-                "will become better over time.");
+            if (PlayAgainstBot.IsChecked == true)
+            {
+                MessageBox.Show("The bot is constantly trained while you are playing, so hopefully it " +
+                    "will become better over time.\n\n" +
+                    "A window will now open, this will display information about the bot, " +
+                    "You will need to open (Or save) a bot file for it to work.");
+
+                botInfo = new Bot.BotInfo();
+                botInfo.Show();
+            } else
+            {
+                /* Close Bot Window */
+                if (botInfo != null) botInfo.Close();
+            }
         }
     }
 }
