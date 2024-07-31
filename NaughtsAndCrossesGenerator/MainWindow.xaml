@@ -147,7 +147,7 @@
 
                     <Grid Grid.Row="2">
                         <StackPanel>
-                            <CheckBox>Play against the bot</CheckBox>
+                            <CheckBox Name="PlayAgainstBot" Click="PlayAgainstBot_Click">Play against the bot</CheckBox>
                         </StackPanel>
                     </Grid>
                 </Grid>

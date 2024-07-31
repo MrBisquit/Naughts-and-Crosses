@@ -35,6 +35,9 @@ namespace NaughtsAndCrossesGenerator
         int[] lastMove = { 0, 0 };
         bool started = false;
 
+        bool isUsingBot = false;
+        Bot.Bot bot;
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             /*DiscordCopyAndPaste.Text = @"\_ | \_ | \_" +
@@ -322,6 +325,12 @@ namespace NaughtsAndCrossesGenerator
         private void Restart_Click(object sender, RoutedEventArgs e)
         {
             Restart();
+        }
+
+        private void PlayAgainstBot_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("The bot is constantly trained while you are playing, so hopefully it " +
+                "will become better over time.");
         }
     }
 }
