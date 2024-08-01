@@ -1,7 +1,10 @@
-﻿using Ookii.Dialogs.Wpf;
+﻿using Newtonsoft.Json;
+using Ookii.Dialogs.Wpf;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.Marshalling;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +28,8 @@ namespace NaughtsAndCrossesGenerator.Bot
         {
             InitializeComponent();
         }
+
+        string saveLocation = string.Empty;
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -52,14 +57,55 @@ namespace NaughtsAndCrossesGenerator.Bot
 
             if(result == existing)
             {
-                VistaOpenFileDialog ofd = new VistaOpenFileDialog();
-                ofd.Filter = "*.json | (JSON File)";
-                ofd.ShowDialog();
+                LoadExisting();
             } else if(result == create)
             {
-                VistaSaveFileDialog sfd = new VistaSaveFileDialog();
-                sfd.Filter = "*.json | (JSON File)";
-                sfd.ShowDialog();
+                CreateNew();
+            }
+        }
+
+        private void LoadExisting()
+        {
+            VistaOpenFileDialog ofd = new VistaOpenFileDialog();
+            ofd.Filter = "JSON File (*.json)|*.json";
+            ofd.ShowDialog();
+
+            if(File.Exists(ofd.FileName))
+            {
+                saveLocation = ofd.FileName;
+
+                Global.mainWindow.bot = JsonConvert.DeserializeObject<Bot>(File.ReadAllText(ofd.FileName));
+            } else
+            {
+                MessageBox.Show("Invalid file location.");
+                Global.mainWindow.PlayAgainstBot.IsChecked = false;
+                Global.mainWindow.isUsingBot = false;
+                Global.mainWindow.bot = null;
+                Global.mainWindow.botInfo.Close();
+            }
+        }
+        private void CreateNew()
+        {
+            VistaSaveFileDialog sfd = new VistaSaveFileDialog();
+            sfd.Filter = "JSON File (*.json)|*.json";
+            sfd.ShowDialog();
+
+            if (!sfd.FileName.EndsWith(".json")) sfd.FileName += ".json";
+
+            Global.mainWindow.bot = new Bot();
+            //File.WriteAllText(sfd.FileName, JsonConvert.SerializeObject(Global.mainWindow.bot));
+
+            saveLocation = sfd.FileName;
+
+            Save();
+        }
+
+        public void Save()
+        {
+            if(!string.IsNullOrEmpty(saveLocation))
+            {
+                File.WriteAllText(saveLocation, JsonConvert.SerializeObject(Global.mainWindow.bot,
+                    Global.IndentJSONFiles ? Formatting.Indented : Formatting.None));
             }
         }
     }

@@ -13,19 +13,19 @@ namespace NaughtsAndCrossesGenerator.Bot
         public double[,] picks = new double[3, 3]
         {
             {
-                0,
-                0,
-                0
+                100.0,
+                100.0,
+                100.0
             },
             {
-                0,
-                0,
-                0,
+                100.0,
+                100.0,
+                100.0,
             },
             {
-                0,
-                0,
-                0
+                100.0,
+                100.0,
+                100.0
             }
         };
 
@@ -33,5 +33,9 @@ namespace NaughtsAndCrossesGenerator.Bot
         public int losses;
         public List<Round> rounds = new List<Round>();
         // The user selects the file location and this will save to it every time there is an update
+        public void TrainOnRound(Round round)
+        {
+            rounds.Add(round);
+        }
     }
 }

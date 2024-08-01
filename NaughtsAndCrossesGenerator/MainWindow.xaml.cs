@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using NaughtsAndCrossesGenerator.Bot;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,8 @@ namespace NaughtsAndCrossesGenerator
         public MainWindow()
         {
             InitializeComponent();
+
+            Global.mainWindow = this;
         }
 
         /**
@@ -35,9 +38,11 @@ namespace NaughtsAndCrossesGenerator
         int[] lastMove = { 0, 0 };
         bool started = false;
 
-        bool isUsingBot = false;
+        public bool isUsingBot = false;
         public Bot.Bot bot;
-        Bot.BotInfo botInfo;
+        public Bot.BotInfo botInfo;
+
+        public Bot.Round currentRound;
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -59,6 +64,8 @@ namespace NaughtsAndCrossesGenerator
             Update();
 
             RestartBtn.IsEnabled = true;
+
+            currentRound = new Bot.Round();
         }
 
         private void Restart()
@@ -86,6 +93,15 @@ namespace NaughtsAndCrossesGenerator
 
             RestartBtn.IsEnabled = false;
             started = false;
+        }
+
+        private void FinishRound(int winner)
+        {
+            if(isUsingBot && bot != null)
+            {
+                currentRound.winner = winner;
+                bot.TrainOnRound(currentRound);
+            }
         }
 
         private void SetWinner(int winner)
