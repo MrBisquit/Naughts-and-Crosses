@@ -14,7 +14,7 @@ namespace NaughtsAndCrossesGenerator.Bot
         public class Move
         {
             public bool wasPlayer;
-            int[,] map = new int[3, 3];
+            public int[,] map = new int[3, 3];
         }
 
         public bool? DetermineIfWon()

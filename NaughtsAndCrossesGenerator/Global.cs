@@ -10,5 +10,9 @@ namespace NaughtsAndCrossesGenerator
     {
         public static MainWindow mainWindow;
         public static bool IndentJSONFiles = true;
+
+        // For the bot training (Adjust values from winning or losing, but not if a tie)
+        public static double BotAdd      = 0.1;
+        public static double BotTakeaway = 0.1;
     }
 }

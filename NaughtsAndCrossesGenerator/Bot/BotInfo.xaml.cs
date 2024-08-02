@@ -2,6 +2,7 @@
 using Ookii.Dialogs.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.Marshalling;
@@ -102,10 +103,12 @@ namespace NaughtsAndCrossesGenerator.Bot
 
         public void Save()
         {
-            if(!string.IsNullOrEmpty(saveLocation))
+            Debug.WriteLine("Save called");
+            if(saveLocation != "")
             {
                 File.WriteAllText(saveLocation, JsonConvert.SerializeObject(Global.mainWindow.bot,
                     Global.IndentJSONFiles ? Formatting.Indented : Formatting.None));
+                Debug.WriteLine("Saved");
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using NaughtsAndCrossesGenerator.Bot;
+using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -97,6 +98,7 @@ namespace NaughtsAndCrossesGenerator
 
         private void FinishRound(int winner)
         {
+            Debug.WriteLine("Finish round called");
             if(isUsingBot && bot != null)
             {
                 currentRound.winner = winner;
@@ -106,9 +108,11 @@ namespace NaughtsAndCrossesGenerator
 
         private void SetWinner(int winner)
         {
+            Debug.WriteLine("Set winner called, winner set to " + winner.ToString());
             Stop();
+            FinishRound(winner);
             Winner.Text = (winner == 0 ? 'o' : 'x').ToString();
-            MessageBox.Show($"Winner: {(winner == 0 ? 'o' : winner == 1 ? 'x' : "No winner? 👍")}");
+            MessageBox.Show($"Winner: {(winner == 1 ? 'o' : winner == 2 ? 'x' : "No winner? 👍")}");
         }
 
         private void ClearButtons()
@@ -161,6 +165,14 @@ namespace NaughtsAndCrossesGenerator
             lastMove[0] = x;
             lastMove[1] = y;
 
+            Round.Move move = new Round.Move()
+            {
+                map = figures,
+                wasPlayer = turn == 1 // 1 because it sets it from 0 to 1 up at the top of this function
+            };
+
+            currentRound.moves.Add(move);
+
             Update();
         }
 
@@ -209,7 +221,7 @@ namespace NaughtsAndCrossesGenerator
             int rowB = CheckRow(figures[0, 1], figures[1, 1], figures[2, 1]);
             int rowC = CheckRow(figures[0, 2], figures[1, 2], figures[2, 2]);
 
-            if(colA != 2)
+            if(colA != -1)
             {
                 A1.Background = new SolidColorBrush(Colors.Green);
                 B1.Background = new SolidColorBrush(Colors.Green);
@@ -218,7 +230,7 @@ namespace NaughtsAndCrossesGenerator
                 SetWinner(colA);
             }
 
-            if (colB != 2)
+            if (colB != -1)
             {
                 A2.Background = new SolidColorBrush(Colors.Green);
                 B2.Background = new SolidColorBrush(Colors.Green);
@@ -227,7 +239,7 @@ namespace NaughtsAndCrossesGenerator
                 SetWinner(colB);
             }
 
-            if (colC != 2)
+            if (colC != -1)
             {
                 A3.Background = new SolidColorBrush(Colors.Green);
                 B3.Background = new SolidColorBrush(Colors.Green);
@@ -236,7 +248,7 @@ namespace NaughtsAndCrossesGenerator
                 SetWinner(colC);
             }
 
-            if (rowAC != 2)
+            if (rowAC != -1)
             {
                 A1.Background = new SolidColorBrush(Colors.Green);
                 B1.Background = new SolidColorBrush(Colors.Green);
@@ -245,7 +257,7 @@ namespace NaughtsAndCrossesGenerator
                 SetWinner(rowAC);
             }
 
-            if (rowCA != 2)
+            if (rowCA != -1)
             {
                 A3.Background = new SolidColorBrush(Colors.Green);
                 B2.Background = new SolidColorBrush(Colors.Green);
@@ -254,7 +266,7 @@ namespace NaughtsAndCrossesGenerator
                 SetWinner(rowCA);
             }
 
-            if (rowA != 2)
+            if (rowA != -1)
             {
                 A1.Background = new SolidColorBrush(Colors.Green);
                 A2.Background = new SolidColorBrush(Colors.Green);
@@ -263,7 +275,7 @@ namespace NaughtsAndCrossesGenerator
                 SetWinner(rowA);
             }
 
-            if (rowB != 2)
+            if (rowB != -1)
             {
                 B1.Background = new SolidColorBrush(Colors.Green);
                 B2.Background = new SolidColorBrush(Colors.Green);
@@ -272,7 +284,7 @@ namespace NaughtsAndCrossesGenerator
                 SetWinner(rowB);
             }
 
-            if (rowC != 2)
+            if (rowC != -1)
             {
                 C1.Background = new SolidColorBrush(Colors.Green);
                 C2.Background = new SolidColorBrush(Colors.Green);
@@ -309,8 +321,10 @@ namespace NaughtsAndCrossesGenerator
 
         private int CheckRow(int a, int b, int c)
         {
+            Debug.WriteLine($"Checking row with values: {a}, {b} and {c}\n" +
+                $"   Returns: {(a == b && b == c && a == c && a != 0 && b != 0 && c != 0)}");
             if(a == b && b == c && a == c && a != 0 && b != 0 && c != 0) return a;
-            return 2;
+            return -1;
         }
 
         private void A1_Click(object sender, RoutedEventArgs e)
@@ -377,8 +391,9 @@ namespace NaughtsAndCrossesGenerator
                     "A window will now open, this will display information about the bot, " +
                     "You will need to open (Or save) a bot file for it to work.");
 
-                botInfo = new Bot.BotInfo();
+                botInfo = new BotInfo();
                 botInfo.Show();
+                isUsingBot = true;
             } else
             {
                 /* Close Bot Window */
