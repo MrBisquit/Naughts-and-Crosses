@@ -17,6 +17,10 @@ namespace NaughtsAndCrossesGenerator.Bot
             public int[,] map = new int[3, 3];
         }
 
+        /// <summary>
+        /// Determines if the round was won by the bot or not
+        /// </summary>
+        /// <returns>'true' if the bot won, 'false' if it did not and 'null' if it was a tie.</returns>
         public bool? DetermineIfWon()
         {
             // Naughts (Noughts) - 'o' = 1

@@ -36,6 +36,11 @@ namespace NaughtsAndCrossesGenerator.Bot
         public int losses;
         public List<Round> rounds = new List<Round>();
         // The user selects the file location and this will save to it every time there is an update
+
+        /// <summary>
+        /// Trains the bot based on the last round and then saves the file
+        /// </summary>
+        /// <param name="round">The last round</param>
         public void TrainOnRound(Round round)
         {
             Debug.WriteLine("Train called");
@@ -127,6 +132,11 @@ namespace NaughtsAndCrossesGenerator.Bot
             Global.mainWindow.botInfo.Save();
         }
 
+        /// <summary>
+        /// Determines if everything in the grid is set to 0.
+        /// </summary>
+        /// <param name="picks">The grid</param>
+        /// <returns>`true` if They all are zero, 'false' if not.</returns>
         public bool DetermineIfAllAreZero(double[,] picks)
         {
             bool areZero = true;
@@ -140,6 +150,12 @@ namespace NaughtsAndCrossesGenerator.Bot
             return areZero;
         }
 
+        /// <summary>
+        /// Removes any existing points on the map, leaving behind only the latest one.
+        /// </summary>
+        /// <param name="last">The move before the last</param>
+        /// <param name="current">The last move</param>
+        /// <returns>A move with only the latest point.</returns>
         public Round.Move RemoveExisting(Round.Move last, Round.Move current)
         {
             Round.Move filtered = new Round.Move()
@@ -159,6 +175,22 @@ namespace NaughtsAndCrossesGenerator.Bot
             }
 
             return current;
+        }
+
+        /// <summary>
+        /// Work out the next move by the bot.
+        /// </summary>
+        /// <param name="round">the current round</param>
+        /// <returns>The x and y coordinates of the position</returns>
+        public int[] MakeMove(Round round)
+        {
+            // Work out based on the values in the picks 3D-Array which ones should be picked,
+            // then generate the random numbers. Work out which one is within the threshold,
+            // if none, then redo it (But with a lower threshold).
+            // Repeat this until it has picked a value, then match it against the latest move
+            // and make sure that it is not overlapping any other moves, if not, return the
+            // value, if it is, redo.
+            return [0, 0];
         }
     }
 }

@@ -65,6 +65,9 @@ namespace NaughtsAndCrossesGenerator.Bot
             }
         }
 
+        /// <summary>
+        /// Prompts the user to open an existing JSON file, if it exists, it will then load the bot file.
+        /// </summary>
         private void LoadExisting()
         {
             VistaOpenFileDialog ofd = new VistaOpenFileDialog();
@@ -85,6 +88,11 @@ namespace NaughtsAndCrossesGenerator.Bot
                 Global.mainWindow.botInfo.Close();
             }
         }
+
+        /// <summary>
+        /// Prompts the user to select a file, if one is selected, it will create the bot and save the new file.
+        /// It will also make sure that the .json file ending is present on the file name.
+        /// </summary>
         private void CreateNew()
         {
             VistaSaveFileDialog sfd = new VistaSaveFileDialog();
@@ -101,6 +109,9 @@ namespace NaughtsAndCrossesGenerator.Bot
             Save();
         }
 
+        /// <summary>
+        /// Saves the latest bot file
+        /// </summary>
         public void Save()
         {
             Debug.WriteLine("Save called");

@@ -58,6 +58,9 @@ namespace NaughtsAndCrossesGenerator
             Stop();
         }
 
+        /// <summary>
+        /// Starts the round
+        /// </summary>
         private void Start()
         {
             started = true;
@@ -69,6 +72,9 @@ namespace NaughtsAndCrossesGenerator
             currentRound = new Bot.Round();
         }
 
+        /// <summary>
+        /// Restarts the round
+        /// </summary>
         private void Restart()
         {
             figures = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
@@ -78,6 +84,9 @@ namespace NaughtsAndCrossesGenerator
             Start();
         }
 
+        /// <summary>
+        /// Stops the round
+        /// </summary>
         private void Stop()
         {
             A1.IsEnabled = false;
@@ -96,6 +105,10 @@ namespace NaughtsAndCrossesGenerator
             started = false;
         }
 
+        /// <summary>
+        /// Finishes the round
+        /// </summary>
+        /// <param name="winner">The winner (If there is any)</param>
         private void FinishRound(int winner)
         {
             Debug.WriteLine("Finish round called");
@@ -106,15 +119,22 @@ namespace NaughtsAndCrossesGenerator
             }
         }
 
+        /// <summary>
+        /// Sets the winner
+        /// </summary>
+        /// <param name="winner">The winner, `1` is 'o' and `2` is 'x'</param>
         private void SetWinner(int winner)
         {
             Debug.WriteLine("Set winner called, winner set to " + winner.ToString());
             Stop();
             FinishRound(winner);
-            Winner.Text = (winner == 0 ? 'o' : 'x').ToString();
+            Winner.Text = winner == 1 ? "o" : winner == 2 ? "x" : "No winner? 👍";
             MessageBox.Show($"Winner: {(winner == 1 ? 'o' : winner == 2 ? 'x' : "No winner? 👍")}");
         }
 
+        /// <summary>
+        /// Clears the buttons and returns them to the normal colour
+        /// </summary>
         private void ClearButtons()
         {
             A1.Background = new SolidColorBrush(Color.FromRgb(221, 221, 221));
@@ -130,6 +150,10 @@ namespace NaughtsAndCrossesGenerator
             C3.Background = new SolidColorBrush(Color.FromRgb(221, 221, 221));
         }
 
+        /// <summary>
+        /// Generates the string that works in markdown (So can be used in things like Discord)
+        /// </summary>
+        /// <returns>The generated string</returns>
         private string WorkOutString()
         {
             string firstRow = $"{(figures[0, 0] == 0 ? @"\_" : figures[0, 0] == 1 ? 'o' : 'x')} | " +
@@ -147,6 +171,11 @@ namespace NaughtsAndCrossesGenerator
             return $"{firstRow}\n-------\n{secondRow}\n-------\n{thirdRow}";
         }
 
+        /// <summary>
+        /// Registers the turn, adds it to the map and updates the components.
+        /// </summary>
+        /// <param name="x">The `x` coordinate</param>
+        /// <param name="y">The `y` coordinate</param>
         private void RegisterTurn(int x, int y)
         {
             if(turn == 0)
@@ -176,6 +205,9 @@ namespace NaughtsAndCrossesGenerator
             Update();
         }
 
+        /// <summary>
+        /// Updates the components and works out if there is a winner or if it's a tie (Or if neither)
+        /// </summary>
         private void Update()
         {
             DiscordCopyAndPaste.Text = WorkOutString();
@@ -319,6 +351,7 @@ namespace NaughtsAndCrossesGenerator
             Tie.Text = tie ? "Yes" : "No";
         }
 
+        // Checks a row for possible winners
         private int CheckRow(int a, int b, int c)
         {
             Debug.WriteLine($"Checking row with values: {a}, {b} and {c}\n" +
