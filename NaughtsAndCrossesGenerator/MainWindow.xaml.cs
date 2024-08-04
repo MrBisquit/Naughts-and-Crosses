@@ -349,6 +349,16 @@ namespace NaughtsAndCrossesGenerator
             }
 
             Tie.Text = tie ? "Yes" : "No";
+
+            if(isUsingBot && turn == 1)
+            {
+                try
+                {
+                    int[] botsMove = bot.MakeMove(currentRound);
+
+                    RegisterTurn(botsMove[0], botsMove[1]);
+                } catch { }
+            }
         }
 
         // Checks a row for possible winners

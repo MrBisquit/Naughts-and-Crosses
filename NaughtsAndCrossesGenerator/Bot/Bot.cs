@@ -190,7 +190,47 @@ namespace NaughtsAndCrossesGenerator.Bot
             // Repeat this until it has picked a value, then match it against the latest move
             // and make sure that it is not overlapping any other moves, if not, return the
             // value, if it is, redo.
-            return [0, 0];
+
+            int threshold = 0; // The minimum, across all of the selections
+            bool moveSelected = false;
+            int[] move = new int[2];
+
+            while(!moveSelected)
+            {
+                Random r = new Random();
+
+                bool[,] bools = new bool[3, 3];
+
+                /*bool A1 = r.Next(threshold, (int)(100.00 - picks[0, 0])) > (threshold * 1.5);
+                bool A2 = r.Next(threshold, (int)(100.00 - picks[0, 1])) > (threshold * 1.5);
+                bool A3 = r.Next(threshold, (int)(100.00 - picks[0, 2])) > (threshold * 1.5);
+
+                bool B1 = r.Next(threshold, (int)(100.00 - picks[1, 0])) > (threshold * 1.5);
+                bool B2 = r.Next(threshold, (int)(100.00 - picks[1, 1])) > (threshold * 1.5);
+                bool B3 = r.Next(threshold, (int)(100.00 - picks[1, 2])) > (threshold * 1.5);
+
+                bool C1 = r.Next(threshold, (int)(100.00 - picks[2, 0])) > (threshold * 1.5);
+                bool C2 = r.Next(threshold, (int)(100.00 - picks[2, 1])) > (threshold * 1.5);
+                bool C3 = r.Next(threshold, (int)(100.00 - picks[2, 2])) > (threshold * 1.5);*/
+
+                for (int x = 0; x < 3; x++)
+                {
+                    for (int y = 0; y < 3; y++)
+                    {
+                        //bools[x, y] = r.Next(threshold, (int)(100.00 - picks[x, y])) > (threshold * 1.5);
+                        bools[x, y] = r.Next(threshold, (int)picks[x, y]) > (threshold * 1.5);
+
+                        if (round.moves[round.moves.Count - 1].map[x, y] == 0 && bools[x, y])
+                        {
+                            return [x, y];
+                        }
+                    }
+                }
+
+                threshold += 1;
+            }
+
+            return [-1, -1]; // (-1, -1) = No move, failed basically
         }
     }
 }
